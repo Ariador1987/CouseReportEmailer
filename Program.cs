@@ -1,8 +1,8 @@
-﻿using CouseReportEmailer.Models;
+﻿using CourseReportEmailer.Models;
 using Newtonsoft.Json;
 using System;
 
-namespace CouseReportEmailer
+namespace CourseReportEmailer
 {
     class Program
     {

@@ -1,10 +1,10 @@
-﻿using CouseReportEmailer.Models;
+﻿using CourseReportEmailer.Models;
 using Dapper;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 
-namespace CouseReportEmailer.Repository
+namespace CourseReportEmailer.Repository
 {
     class EnrollmentReportDetailCommand
     {

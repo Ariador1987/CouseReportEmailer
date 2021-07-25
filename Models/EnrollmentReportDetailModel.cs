@@ -1,4 +1,4 @@
-﻿namespace CouseReportEmailer.Models
+﻿namespace CourseReportEmailer.Models
 {
     class EnrollmentReportDetailModel
     {
