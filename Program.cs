@@ -1,5 +1,5 @@
-﻿using CourseReportEmailer.Models;
-using Newtonsoft.Json;
+﻿using CourseReportEmailer.Repository;
+using CourseReportEmailer.Workers;
 using System;
 
 namespace CourseReportEmailer
@@ -10,21 +10,23 @@ namespace CourseReportEmailer
 
         static void Main(string[] args)
         {
-            var model = new EnrollmentReportDetailModel()
+            try
             {
-                // init obj so we can return it as Json
-                EnrollmentId = 1,
-                CourseCode = "CA",
-                Description = "desc",
-                FirstName = "Mark",
-                LastName = "Markins"
-            };
+                var command = new EnrollmentReportDetailCommand(_connString);
+                var models = command.GetList();
 
+                var reportFileName = "EnrollmentDetailsReport.xslx";
+                EnrollmentDetailReportSpreadSheetCreator enrollmentSheetCreator = new EnrollmentDetailReportSpreadSheetCreator();
+                enrollmentSheetCreator.Create(reportFileName, models);
 
-            var Json = JsonConvert.SerializeObject(model);
+                EnrollmentDetailReportEmailSender emailer = new EnrollmentDetailReportEmailSender();
+                emailer.Send(reportFileName);
+            }
+            catch (Exception ex)
+            {
 
-            // turns Json format into a Object
-            EnrollmentReportDetailModel objFromJson = (EnrollmentReportDetailModel)JsonConvert.DeserializeObject(Json, typeof(EnrollmentReportDetailModel));
+                Console.WriteLine("Something went wrong: " + ex.Message);
+            }
         }
     }
 }
